@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>chating app</title>
+    <link rel="shortcut icon" href="/images/icon.jpg" type="image/x-icon">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  .main{
+    background-image: url("/images/Desktop\ -\ 1\ \(1\).jpg");
+    
+  }
+</style>
+  </head>
+  <body>
+    <div class="main w-full h-full  ">
+
+<div class=" w-full h-[50px] bg-gray-300 flex items-center justify-between pl-4 pr-4">
+  <div class="flex  items-center gap-2" >
+    <img class="w-7 h-7 rounded-full  " src="/images/icon.jpg" alt="">
+    <h2>Chating App</h2>
+
+  </div>
+  <div  class=" flex flex-col" >
+      <i   onclick="openmenu()" class="ri-menu-line"></i>  
+    
+   </div>
+</div>
+
+ 
+  <div class="w-[420px] h-[420px] mt-[8vw] ml-[40vw] opacity-70  bg-blue-200 flex  flex-col items-center justify-center rounded-full gap-10 " >
+    <div class="text-zinc-500 text-xl capitalize cursor-pointer " >
+      <button onclick="openregister()"  class="  capitalize  ">register</button> 
+      /
+    <button onclick="openlogin()" class=" capitalize">logIn</button></div>
+<form action="/register"  method="post" class=" register flex flex-col gap-5  items-center justify-center "  >
+
+
+  <input  class="w-60  h-8 bg-zinc-500 text-white outline-0 rounded pl-5 capitalize placeholder:text-white 
+  " type="text" name="username" placeholder="username" >
+  <input   class="w-60  h-8 bg-zinc-500 text-white outline-0 rounded pl-5 capitalize placeholder:text-white "  type="email" name="email" placeholder="email" >
+  <input  class="w-60  h-8 bg-zinc-500  text-white outline-0 rounded pl-5 capitalize  placeholder:text-white"  type="password" name="password" placeholder="password" >
+<input  class="w-40 h-8 bg-blue-300 rounded drop-shadow-lg shadow-black   active:scale-[0.89] hover:cursor-pointer" type="submit">
+
+</form>
+<form action="/login"  method="post" class=" login hidden flex-col gap-5  items-center justify-center    " >
+
+
+  <input  class="w-60  h-8 bg-zinc-500 text-white outline-0 rounded pl-5 capitalize placeholder:text-white " type="text" name="username" placeholder="username" >
+  <input  class="w-60  h-8 bg-zinc-500  text-white outline-0 rounded pl-5 capitalize  placeholder:text-white"  type="password" name="password" placeholder="password" >
+<input  class="w-40 h-8 bg-blue-300 rounded drop-shadow-lg shadow-black   active:scale-[0.89] hover:cursor-pointer" type="submit">
+
+</form>
+  </div>
+</div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+
+
+        function openlogin(){
+       
+          document.querySelector(".register").style.display="none";
+  document.querySelector(".login").style.display="flex";
+
+
+        }
+        function openregister(){
+         
+          document.querySelector(".login").style.display="none";
+  document.querySelector(".register").style.display="flex";  
+   }
+   
+
+
+    </script>
+  </body>
+</html>

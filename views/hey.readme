@@ -1,0 +1,53 @@
+  
+
+  onclick="addFriend(event,'${_id}','${profileImage}','${username}')"
+
+  
+  
+    async function addFriend(event,_id,profileImage,username,){
+
+    document.querySelector(".users").style.display="none"
+    document.querySelector("#searchUser").value=""
+const response = await axios.post("/addFriend",{
+friendId :_id
+})
+    }
+
+    
+
+    router.post("/addFriend",isLoggedIn,async function(req,res,next){
+
+
+    const friendId = req.body.friendId
+     const friendUser = await userModel.findOne({
+      _id:friendId
+     })
+     const loggedInUser = await userModel.findOne({
+      username:req.session.passport.user
+     })
+
+const indexoffriendUser = loggedInUser.friends.indexOf(friendUser._id)
+
+
+// console.log(indexoffriendUser)
+
+ if(indexoffriendUser!==-1){
+  res.status(200).json({
+    message : `allready friends`
+  })
+  return
+ }
+ loggedInUser.friends.push(friendUser._id)
+ friendUser.friends.push(loggedInUser._id)
+
+  await loggedInUser.save()
+  await friendUser.save()
+
+  res.status(200).json({
+    message: "friend added"
+  })
+
+      })
+    
+    
+

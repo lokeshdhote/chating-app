@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/images/icon.jpg" type="image/x-icon">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .conversationArea {
+        padding: 0.7rem;
+      }
+  
+  .conversationArea .message {
+        padding: 0.5rem 0.75rem;
+        border-radius: 1rem;
+        background-color: #d1d1d1;
+        width: fit-content;
+      }
+  .conversationArea .outgoingMessage {
+        margin-left: auto;
+      }
+  
+       .bottom {
+        width: 100%;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+      }
+  
+   .bottom input {
+        width: 100%;
+        height: 100%;
+        padding: 0rem 0.75rem;
+        border: 2px solid rgba(0, 0, 0, 0.329);
+        border-radius: 0.75rem;
+      }
+.bottom button {
+        padding: 0rem 0.75rem;
+      }
+  
+.conversationArea {
+        height: calc(100% - 10rem);
+      }
+            </style>
+</head>
+<body>
+
+    <div  class="main  w-full h-full bg-zinc-500 overflow-hidden">
+        <div class=" w-full h-[50px] bg-gray-300 flex items-center justify-between pl-4 pr-4">
+            <div class="flex  items-center gap-2" >
+              <img class="w-7 h-7 rounded-full  " src="/images/icon.jpg" alt="">
+              <h2>Chating App</h2>
+       
+            </div>
+            <div  class=" flex flex-col" >
+                <i id="menu"  onclick="openmenu()" class="ri-menu-line"></i>  
+               <div class="option hidden flex-col gap-5 absolute top-12 right-0 capitalize text-lg text-zinc-500 bg-gray-300 p-5 text-center">
+                <a href="/userprofile">user</a>
+                <a class="" href="/logout">logout</a>
+               </div>
+             </div>
+          </div>
+        
+  
+        <div class="container w-[100%] h-[100%]   flex ">
+            <div class="left  w-1/3 h-[100%] bg-zinc-500">
+                <div class="pl-5 gap-2 flex  items-center mt-5 ml-10 w-[17vw] h-8 rounded-full  bg-white">
+                   <i class="ri-search-line"></i> 
+                    <input  id="searchUser" class=" outline-none w-25 h-7 pl-4 rounded-full" type="text" placeholder="search">
+                </div>
+                
+            <div id="user" class="user   h-fit pl-4 pt-5 flex flex-col " >
+             
+            </div>
+            <div  id="chat" class="chat  w-full h-screen pl-7 pt-10 flex flex-col gap-4">
+
+              <% loggedUser.friends.forEach(friend=>{ %>
+                <div onclick="openChat('<%= friend.profileImage %>','<%= friend.username %>','<%= friend._id %>')"  class="chats  cursor-pointer text-white" id="s_<%= friend._id %>">
+                  <div class="user  flex gap-[1rem] items-center">
+                    <img class="h-[2rem] w-[2rem] object-cover rounded-full" src=" <%= friend.profileImage %>" alt="">
+                    <h3><%= friend.username %></h3>
+               
+                  </div>
+
+
+                </div>
+                <% }) %>
+            </div>
+
+
+            </div>
+            <div class="right   w-screen  h-[100%] bg-white ">
+                <div class="pt-5 pl-7 flex items-center  gap-10 " >
+                  <div class=" w-[2.5vw] h-[2.5vw] rounded-full bg-gray-300 " >
+                    <img class="imgDiv w-[2.5vw] h-[2.5vw] rounded-full" src="  https://images.pexels.com/photos/11867612/pexels-photo-11867612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"alt="">
+                  </div>
+                  <h3 class="oppositeUserName " >username</h3>
+                </div>
+                <div class="conversationArea">
+
+                </div>
+                <div  class="bottom">
+                  <input type="text" placeholder="Enter message" class="inputMessage">
+                  <button onclick="sendMessage()" id="sendMessage"> send </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js" integrity="sha512-NQfB/bDaB8kaSXF8E77JjhHG5PM6XVRxvHzkZiwl3ddWCEPBa23T76MuWSwAJdMGJnmQqM0VeY9kFszsrBEFrQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  
+<script>
+      var socket = io();
+  const username = "<%=loggedUser.username %>"
+
+  socket.emit('join-server',username)
+
+  
+  let oppositeUser = null
+
+
+
+
+    function openmenu(){       
+        var option = document.querySelector(".option")
+       
+
+        if(option.style.display==="none")
+        {
+option.style.display="flex"
+        }
+        else{
+            option.style.display="none"  
+        }
+        
+        
+    }
+    document.querySelector('#searchUser').addEventListener('input', async (event) => {
+      const data = document.querySelector("#searchUser").value
+    
+      // console.log(event.data)
+      if(event.data===data){
+      document.querySelector("#user").style.display="flex"
+      document.querySelector("#chat").style.display="none"
+      hey
+      }
+      
+ else{
+        document.querySelector("#user").style.display="none"
+        document.querySelector("#chat").style.display="flex"
+      }
+
+    })
+
+    document.querySelector('#searchUser').addEventListener('input', async (event) => {
+      
+    document.querySelector(".user").style.display="flex"
+      const data = document.querySelector("#searchUser").value
+
+      const searchinput = document.querySelector("#searchUser")
+
+const input = searchinput.value.trim()
+
+if ( input == "") {
+       document.querySelector(".users").style.display="none"
+      //  document.querySelector(".user .chat").style.display="flex"
+      
+  
+       return
+     }
+      const response = await axios.post('/searchUser', {
+        data: data
+      
+      })
+      document.querySelector('.user').innerHTML = ""
+       response.data.forEach(function( searchUser ){
+
+       appendSearchUser(searchUser.profileImage, searchUser.username, searchUser._id)
+     });
+
+    //  document.querySelector("#searchUser").value=""
+    
+    })
+  
+  
+    function appendSearchUser(profileImage,username,_id,){
+      const template = ` <div  onclick="addFriend(event,'${_id}','${profileImage}','${username}')" class="users  capitalize  pl-4 pt-5 flex items-center gap-5 cursor-pointer "  id="${_id}"  >
+  <img class=" w-[2.5rem] h-[2.5rem] rounded-full " src="${profileImage}" alt="">
+  <h3 class="text-zinc-700 text-xl ">${username}</h3>
+</div> `
+document.querySelector(".user").innerHTML+=template
+    }
+  
+  
+    async function addFriend(event,_id,profileImage,username,){
+      document.querySelector("#user").style.display="none"
+      document.querySelector("#chat").style.display="flex"
+      try {
+
+        const response = await axios.post("/addFriend",{
+friendId :_id
+})
+
+        console.log("this is working")
+
+      } catch (err) {
+        console.log("this is error")
+      }
+
+      
+      friendSection(profileImage, username,_id)
+
+    // document.querySelector(".user").style.display="none"
+    document.querySelector("#searchUser").value=""
+    // document.querySelector('.user').innerHTML = ""
+
+   
+
+    }
+   
+   
+    function friendSection(profileImage, username,_id){
+      
+  
+if(document.querySelector(`.chat #s_${_id}`)){
+  return
+}
+
+  const template = `<div class="chats cursor-pointer capitalize flex flex-col" id="s_${_id}">
+              <div class="user flex gap-2 items-center">
+<img class="w-[2.5rem] h-[2.5rem] rounded-full" src="${profileImage}" alt="">
+                <h3 class="text-white text-xl " >${username}</h3>
+              </div>
+             </div>`
+             document.querySelector(".chat").innerHTML+=template
+          
+            }
+           
+
+
+async function openChat(profileImage,username,_id){
+  document.querySelector(".right").style.display="initial"
+
+  const response = await axios.post('/getMSG',{
+
+receiver:username
+
+
+  })
+
+
+  document.querySelector('.conversationArea').innerHTML = "";
+console.log(response.data)
+  response.data.forEach(message => {
+    if (message.sender !== username){ 
+      console.log(message)
+    appendOutgoingMessage(message.data);
+  } else {
+    appendIncomingMessage(message.data);
+  }
+});
+
+
+oppositeUser = username;
+document.querySelector('.right .imgDiv').setAttribute('src', profileImage);
+document.querySelector('.right .oppositeUserName').innerHTML = username;
+}
+
+
+            function appendOutgoingMessage(message) {
+      const template = `<div class="message outgoingMessage">
+          ${message}
+        </div>`
+      document.querySelector('.conversationArea').innerHTML += template
+    }
+
+    function appendIncomingMessage(message) {
+      console.log(message)
+      const template = `<div class="message">
+          ${message}
+        </div>`
+      document.querySelector('.conversationArea').innerHTML += template
+    }
+
+    function sendMessage() {
+      const message = document.querySelector('.inputMessage').value
+      appendOutgoingMessage(message)
+      document.querySelector('.inputMessage').value = ""
+
+      const messageObject = {
+        message:message,
+        receiver:  oppositeUser,
+        sender: username
+      }
+      socket.emit('messageModel',messageObject)
+ ///message here /////
+//
+    }
+    
+ 
+    
+
+
+
+    socket.on('receive-private-message', messageObject => {
+  
+        messageObject = {
+            message:messageObject.message,
+            receiver:messageObject.receiver
+        }
+     console
+      appendIncomingMessage(messageObject.message)
+
+    })
+
+
+
+
+            
+
+
+</script>
+</body>
+</html>

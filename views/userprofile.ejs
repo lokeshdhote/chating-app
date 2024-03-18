@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/images/icon.jpg" type="image/x-icon">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="main h-full w-full  bg-zinc-700 flex flex-col items-center gap-20 pt-[7rem]   ">
+<div class="w-20 h-20   rounded-full ">
+    <form hidden method="post" enctype="multipart/form-data" id="fileform" action="/uploads">
+        <input  type="file" name="image" id="fileImage">
+    </form>
+    
+    <img class="profileimg h-full w-full object-cover rounded-full" src="/images/uploads/<%=user.profileImage %>" alt="">
+    
+</div>
+
+<div class="inputtag  flex flex-col gap-7  ">
+    <input class=" w-[20rem]   h-10 outline-none  bg-zinc-400 placeholder:text-white capitalize  pl-5 " type="text" placeholder="name" value="<%=user.username %>" >
+<input class=" w-[20rem]   h-10 outline-none  bg-zinc-400 placeholder:text-white capitalize  pl-5 "  type="email"placeholder="email" value="<%=user.email %>" >
+<a href="/editProfile"><input class="w-[20rem]  mt-5  h-10 outline-none  bg-zinc-400 placeholder:text-white text-xl capitalize active:scale-[0.97] " type="submit" value="edit"> </a>
+</div>
+
+
+
+    </div>
+    <script>
+      
+      function profileIMG(){
+        document.querySelector(".profileimg").addEventListener("click",function(){
+            document.querySelector("#fileImage").click()
+        })
+        document.querySelector("#fileImage")
+    .addEventListener("change", function(){
+      document.querySelector("#fileform").submit();
+    });
+      }
+     profileIMG()
+ 
+    </script>
+    
+</body>
+</html>

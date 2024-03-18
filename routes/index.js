@@ -64,7 +64,9 @@ await user.save()
 
 router.post('/getMSG', isLoggedIn, async (req, res, next) => {
 
+console.log(req.user.username)
 
+console.log(req.user.sender)
 
 const chats  = await messageModel.find({
    $or: [
@@ -78,8 +80,6 @@ const chats  = await messageModel.find({
       }
     ]
 })
-
-
 
   res.status(200).json(chats)
 })

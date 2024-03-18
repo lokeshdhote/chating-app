@@ -257,13 +257,13 @@ receiver:username
 
 
   document.querySelector('.conversationArea').innerHTML = "";
-console.log(response.data)
+
   response.data.forEach(message => {
     if (message.sender !== username){ 
       console.log(message)
-    appendOutgoingMessage(message.data);
+    appendOutgoingMessage(message.message);
   } else {
-    appendIncomingMessage(message.data);
+    appendIncomingMessage(message.message);
   }
 });
 
@@ -282,7 +282,7 @@ document.querySelector('.right .oppositeUserName').innerHTML = username;
     }
 
     function appendIncomingMessage(message) {
-      console.log(message)
+     
       const template = `<div class="message">
           ${message}
         </div>`
@@ -300,8 +300,7 @@ document.querySelector('.right .oppositeUserName').innerHTML = username;
         sender: username
       }
       socket.emit('messageModel',messageObject)
- ///message here /////
-//
+ 
     }
     
  
@@ -315,8 +314,8 @@ document.querySelector('.right .oppositeUserName').innerHTML = username;
             message:messageObject.message,
             receiver:messageObject.receiver
         }
-     console
-      appendIncomingMessage(messageObject.message)
+   
+      appendIncomingMessage(message)
 
     })
 

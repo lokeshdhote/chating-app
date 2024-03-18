@@ -32,8 +32,7 @@ socket.on('messageModel', async messageObject=>{
      const receiver = await userModel.findOne({
         username:messageObject.receiver
      })
-    //  socket.emit('returnmessageModel',messageObject)
-    // console.log(messageObject.message)
+    
     
      socket.to(receiver.socketId).emit('receive-private-message', messageObject=>{
         messageObject={
@@ -45,21 +44,6 @@ socket.on('messageModel', async messageObject=>{
      })
   
 })
-// socket.on('send-private-message', async messageObject => {
-
-   
-
-
-//     const receiver = await userModel.findOne({
-//         username: messageObject.receiver
-//     })
-
-//     console.log(receiver)
-
-
-   
-// // console.log(messageObject.message);
-// })
 
 });
 
